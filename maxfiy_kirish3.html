@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maxfiy kirish</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background-image: url("https://i.postimg.cc/bw2Y1msb/IMG-20250530-011106-576.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 40px;
+      overflow-x: hidden;
+    }
+
+    #login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 10;
+      position: relative;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 14px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #555;
+      user-select: none;
+    }
+
+    #result {
+      margin-top: 10px;
+      font-size: 16px;
+      color: red;
+    }
+
+    /* Welcome screen */
+    #welcome-screen {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center bottom;
+      color: white;
+      font-size: 22px;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease forwards, oceanWave 6s ease-in-out infinite;
+    }
+
+    #welcome-screen a {
+      margin-top: 20px;
+      background: #0088cc;
+      padding: 12px 25px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0, 136, 204, 0.6);
+      transition: background-color 0.3s ease;
+    }
+
+    #welcome-screen a:hover {
+      background-color: #005f8a;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes oceanWave {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 500px) {
+      #login-box {
+        padding: 20px;
+      }
+
+      #welcome-screen {
+        font-size: 18px;
+      }
+
+      #welcome-screen a {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-box">
+    <h2>🔒 Maxfiy kirish sahifasi</h2>
+    <p>Iltimos, parolni kiriting:</p>
+
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Parol" />
+      <span class="toggle-password" onclick="togglePassword()">👁</span>
+    </div>
+
+    <button onclick="checkPassword()">Kirish</button>
+    <div id="result"></div>
+  </div>
+
+  <div id="welcome-screen">
+    <div>✅ Xush kelibsan! 🌸 Seni bu yerda ko'rib turganimdan hursandman 😊, demak uddalading ko'dni topishga. Sirli olamimga xush kelding 🎉</div>
+    <a href="https://t.me/+9wZ-dMs4wrdhNjdi" target="_blank">👉🪄Sirli olamimga oʼtish✨</a>
+  </div>
+
+  <!-- Dengiz shovqini -->
+  <audio id="sea-sound" preload="auto" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/08/audio_42f17f4480.mp3?filename=ocean-waves-5-ambient-sea-sound-6687.mp3" type="audio/mpeg">
+    Sizning brauzeringiz audio-ni qo‘llab-quvvatlamaydi.
+  </audio>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById("password");
+      const icon = document.querySelector(".toggle-password");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('password').value;
+      const result = document.getElementById('result');
+      const loginBox = document.getElementById('login-box');
+      const welcomeScreen = document.getElementById('welcome-screen');
+      const seaSound = document.getElementById('sea-sound');
+      const correct = 'Sevinchber123';
+
+      if (input === correct) {
+        loginBox.style.display = 'none';
+        welcomeScreen.style.display = 'flex';
+
+        seaSound.currentTime = 0;
+        seaSound.play().catch(err => {
+          console.log("Audio avtomatik ijro etilmadi:", err);
+        });
+      } else {
+        result.textContent = '❌ Parol noto‘g‘ri. Qayta urinib ko‘ring.';
+      }
+    }
+  </script>
+</body>
+</html>
